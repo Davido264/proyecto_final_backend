@@ -1,0 +1,36 @@
+{
+  "name": "proyecto-backend",
+  "version": "1.0.0",
+  "description": "Backend del proyecto final de Desarrollo Web",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node.exe src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Davido264/proyecto_final_backend.git"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "backend"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Davido264/proyecto_final_backend/issues"
+  },
+  "homepage": "https://github.com/Davido264/proyecto_final_backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongodb": "^4.13"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1",
+    "prettier": "^2.8.1"
+  }
+}
