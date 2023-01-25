@@ -60,9 +60,20 @@ async function put(req, res, next) {
   }
 }
 
+async function deletep(req, res, next) {
+  try {
+    const id = req.params.id;
+    const result = await profilesService.deleteProfile(id);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   get,
   getById,
   post,
   put,
+  deletep,
 };

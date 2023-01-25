@@ -51,4 +51,22 @@ async function updateProfile(id, profile) {
   }
 }
 
-export default { getProfiles, addProfile, updateProfile, getProfile };
+async function deleteProfile(id) {
+  const client = createClient();
+  try {
+    return await client
+      .db(dbName)
+      .collection(profileCollectionName)
+      .deleteOne(id);
+  } finally {
+    client.close();
+  }
+}
+
+export default {
+  getProfiles,
+  addProfile,
+  updateProfile,
+  getProfile,
+  deleteProfile,
+};
