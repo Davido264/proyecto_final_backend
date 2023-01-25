@@ -5,7 +5,8 @@ import express from 'express';
 import errorHandler from './midleware/errorHandler.js';
 import beforeMethod from './midleware/logger.js';
 import adminRouter from './routes/adminRouter.js';
-import teacherRouter from './routes/teachersRoute.js';
+import profileRouter from './routes/profileRouter.js';
+import teacherRouter from './routes/teachersRouter.js';
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get('/', (req, res, next) => {
 // routers
 app.use('/teachers', teacherRouter);
 app.use('/admin', adminRouter);
+app.use('/profiles', profileRouter);
 
 app.use(errorHandler);
 app.listen(port, () => console.log(`listening on ${port}`));

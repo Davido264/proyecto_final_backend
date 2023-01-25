@@ -1,4 +1,4 @@
-import { createClient, dbName } from './mongo';
+import { createClient, dbName } from './mongo.js';
 
 const profileCollectionName = 'profiles';
 
@@ -10,6 +10,18 @@ async function getProfiles(query = {}) {
       .collection(profileCollectionName)
       .find(query)
       .toArray();
+  } finally {
+    client.close();
+  }
+}
+
+async function getProfile(id) {
+  const client = createClient();
+  try {
+    return await client
+      .db(dbName)
+      .collection(profileCollectionName)
+      .findOne(id);
   } finally {
     client.close();
   }
@@ -39,4 +51,4 @@ async function updateProfile(id, profile) {
   }
 }
 
-export default { getProfiles, addProfile, updateProfile };
+export default { getProfiles, addProfile, updateProfile, getProfile };

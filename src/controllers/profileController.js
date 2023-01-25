@@ -1,6 +1,6 @@
-import { postSchema, putSchema } from '../schemas/profileSchema';
+import { postSchema, putSchema } from '../schemas/profileSchema.js';
 import profilesService from '../services/profilesService.js';
-import validateSchema from '../services/schemaValidator';
+import validateSchema from '../services/schemaValidator.js';
 
 async function get(req, res, next) {
   try {
@@ -14,7 +14,7 @@ async function get(req, res, next) {
 async function getById(req, res, next) {
   try {
     const id = req.params.id;
-    const profiles = await profilesService.getProfiles({ _id: id });
+    const profiles = await profilesService.getProfile(id);
     res.json(profiles);
   } catch (error) {
     next(error);
@@ -29,6 +29,14 @@ async function post(req, res, next) {
     }
 
     const profile = req.body;
+
+    if (req.body.isStudent && !req.body.college) {
+      res
+        .status(400)
+        .json({ message: 'college field is mandatory if isStudent is true' });
+      return;
+    }
+
     const result = await profilesService.addProfile(profile);
     res.json(result);
   } catch (error) {

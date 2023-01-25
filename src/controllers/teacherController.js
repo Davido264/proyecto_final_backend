@@ -14,7 +14,7 @@ async function get(_, res, next) {
 async function getById(req, res, next) {
   try {
     const id = req.params.id;
-    const teacher = await service.getTeachers({ $id: id });
+    const teacher = await service.getTeacher(id);
     res.json(teacher);
   } catch (error) {
     next(error);
@@ -40,7 +40,7 @@ async function put(req, res, next) {
   try {
     const teacher = req.body;
     const id = req.params.id;
-    const result = await service.modifyTeacher({ $id: id }, teacher);
+    const result = await service.modifyTeacher({ _id: id }, teacher);
     res.json(result);
   } catch (error) {
     next(error);

@@ -16,6 +16,19 @@ async function getTeachers(query = {}) {
   }
 }
 
+async function getTeacher(id) {
+  const client = createClient();
+  try {
+    await client.connect();
+    return await client
+      .db(dbName)
+      .collection(teacherCollectionName)
+      .findOne(id);
+  } finally {
+    client.close();
+  }
+}
+
 async function addTeacher(teacher) {
   const client = createClient();
   try {
@@ -44,6 +57,7 @@ async function modifyTeacher(id, teacher) {
 
 export default {
   getTeachers,
+  getTeacher,
   addTeacher,
   modifyTeacher,
 };
