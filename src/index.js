@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import errorHandler from './midleware/errorHandler.js';
@@ -10,6 +11,7 @@ const app = express();
 dotenv.config();
 const port = process.env.PORT || 9090;
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(beforeMethod);
 
