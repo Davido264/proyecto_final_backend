@@ -1,3 +1,5 @@
+import { postSchema } from '../schemas/teacherSchema.js';
+import validateSchema from '../services/schemaValidator.js';
 import service from '../services/teachersService.js';
 
 async function get(_, res, next) {
@@ -21,6 +23,11 @@ async function getById(req, res, next) {
 
 async function post(req, res, next) {
   try {
+    const correct = validateSchema(postSchema, req, res);
+    if (!correct) {
+      return;
+    }
+
     const teacher = req.body;
     const result = await service.addTeacher(teacher);
     res.json(result);

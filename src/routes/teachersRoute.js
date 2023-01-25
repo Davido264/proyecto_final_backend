@@ -4,7 +4,6 @@ import teacherController from '../controllers/teacherController.js';
 const teacherRouter = Router();
 
 //router.use(authenticate);
-//teacherRouter.use(createValidation(teacherSchema));
 teacherRouter.get('/', teacherController.get);
 teacherRouter.get('/:id', teacherController.getById);
 
