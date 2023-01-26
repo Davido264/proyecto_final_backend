@@ -2,7 +2,7 @@ const postSchema = {
   $id: '',
   type: 'object',
   properties: {
-    crateDate: {
+    createDate: {
       type: 'string',
       format: 'date',
       required: true,
@@ -15,9 +15,9 @@ const postSchema = {
       type: 'string',
       required: true,
     },
-    dubnail: {
+    dumbnail: {
       type: 'string',
-      required: true,
+      required: false,
     },
     open: {
       type: 'boolean',

@@ -1,4 +1,5 @@
-import { createClient, dbName } from './mongo.js';
+import { ObjectId } from 'mongodb';
+import { createClient, getDbName } from './mongo.js';
 
 const teacherCollectionName = 'teachers';
 
@@ -7,7 +8,7 @@ async function getTeachers(query = {}) {
   try {
     await client.connect();
     return await client
-      .db(dbName)
+      .db(getDbName())
       .collection(teacherCollectionName)
       .find(query)
       .toArray();
@@ -21,9 +22,9 @@ async function getTeacher(id) {
   try {
     await client.connect();
     return await client
-      .db(dbName)
+      .db(getDbName())
       .collection(teacherCollectionName)
-      .findOne(id);
+      .findOne({ _id: new ObjectId(id) });
   } finally {
     client.close();
   }
@@ -34,7 +35,7 @@ async function addTeacher(teacher) {
   try {
     await client.connect();
     return await client
-      .db(dbName)
+      .db(getDbName())
       .collection(teacherCollectionName)
       .insertOne(teacher);
   } finally {
@@ -47,9 +48,9 @@ async function modifyTeacher(id, teacher) {
   try {
     await client.connect();
     return await client
-      .db(dbName)
+      .db(getDbName())
       .collection(teacherCollectionName)
-      .updateOne({ $id: id }, teacher);
+      .updateOne({ _id: new ObjectId(id) }, { $set: teacher });
   } finally {
     client.close();
   }

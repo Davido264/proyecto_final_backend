@@ -10,7 +10,7 @@ const postSchema = {
       type: 'string',
       required: true,
     },
-    genre: {
+    gender: {
       type: 'string',
       pattern: /^f|m|o$/gim,
       required: false,
@@ -35,7 +35,7 @@ const putSchema = {
       type: 'string',
       required: false,
     },
-    genre: {
+    gender: {
       type: 'string',
       pattern: /^f|m|o$/gim,
       required: false,

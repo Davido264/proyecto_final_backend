@@ -1,5 +1,5 @@
-import { MongoExpiredSessionError } from 'mongodb';
-import { createClient, dbName } from './mongo.js';
+import { ObjectId } from 'mongodb';
+import { createClient, getDbName } from './mongo.js';
 
 const cursesCollectionName = 'courses';
 
@@ -8,7 +8,7 @@ async function getCourses(query = {}) {
   try {
     await client.connect();
     return await client
-      .db(dbName)
+      .db(getDbName())
       .collection(cursesCollectionName)
       .find(query)
       .toArray();
@@ -21,10 +21,39 @@ async function getCourse(id) {
   const client = createClient();
   try {
     await client.connect();
-    return await client.db(dbName).collection(cursesCollectionName).findOne(id);
+    return await client
+      .db(getDbName())
+      .collection(cursesCollectionName)
+      .findOne({ _id: new ObjectId(id) });
   } finally {
     client.close();
   }
 }
 
-export default { getCourse, getCourses };
+async function addCourse(course) {
+  const client = createClient();
+  try {
+    await client.connect();
+    return await client
+      .db(getDbName())
+      .collection(cursesCollectionName)
+      .insertOne(course);
+  } finally {
+    client.close();
+  }
+}
+
+async function modifyCourse(id, course) {
+  const client = createClient();
+  try {
+    await client.connect();
+    return await client
+      .db(getDbName())
+      .collection(cursesCollectionName)
+      .updateOne({ _id: new ObjectId(id) }, { $set: course });
+  } finally {
+    client.close();
+  }
+}
+
+export default { getCourse, getCourses, addCourse, modifyCourse };

@@ -19,12 +19,24 @@ const postSchema = {
       format: 'date',
       required: true,
     },
-    genre: {
+    gender: {
       type: 'string',
       pattern: /^f|m|o$/gim,
       required: false,
     },
     college: {
+      type: 'string',
+      required: false,
+    },
+    username: {
+      type: 'string',
+      required: true,
+    },
+    password: {
+      type: 'string',
+      required: true,
+    },
+    email: {
       type: 'string',
       required: false,
     },
@@ -52,12 +64,24 @@ const putSchema = {
       format: 'date',
       required: false,
     },
-    genre: {
+    gender: {
       type: 'string',
       pattern: /^f|m|o$/gim,
       required: false,
     },
     college: {
+      type: 'string',
+      required: false,
+    },
+    username: {
+      type: 'string',
+      required: false,
+    },
+    password: {
+      type: 'string',
+      required: false,
+    },
+    email: {
       type: 'string',
       required: false,
     },

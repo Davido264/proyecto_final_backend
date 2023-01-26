@@ -1,5 +1,5 @@
 import { postSchema } from '../schemas/teacherSchema.js';
-import validateSchema from '../services/schemaValidator.js';
+import validateSchema from '../services/schemaValidatorService.js';
 import service from '../services/teachersService.js';
 
 async function get(_, res, next) {
@@ -40,7 +40,7 @@ async function put(req, res, next) {
   try {
     const teacher = req.body;
     const id = req.params.id;
-    const result = await service.modifyTeacher({ _id: id }, teacher);
+    const result = await service.modifyTeacher(id, teacher);
     res.json(result);
   } catch (error) {
     next(error);

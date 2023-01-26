@@ -1,7 +1,6 @@
-import { ServerCapabilities } from 'mongodb';
 import { postSchema } from '../schemas/courseSchema.js';
 import service from '../services/coursesService.js';
-import validateSchema from '../services/schemaValidator.js';
+import validateSchema from '../services/schemaValidatorService.js';
 
 async function get(_, res, next) {
   try {
@@ -24,7 +23,7 @@ async function getById(req, res, next) {
 
 async function post(req, res, next) {
   try {
-    const correct = validateSchema(postSchema, postSchema, req, res);
+    const correct = validateSchema(postSchema, req, res);
 
     if (!correct) {
       return;
@@ -41,7 +40,7 @@ async function put(req, res, next) {
   try {
     const course = req.body;
     const id = req.param.id;
-    const result = await service.modifyCourse({ $id: id }, course);
+    const result = await service.modifyCourse(id, course);
     res.json(result);
   } catch (error) {
     next(error);
