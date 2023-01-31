@@ -14,7 +14,7 @@ async function get(_, res, next) {
 async function getById(req, res, next) {
   try {
     const id = req.params.id;
-    const course = await service.getCourse({ $id: id });
+    const course = await service.getCourse(id);
     res.json(course);
   } catch (error) {
     next(error);

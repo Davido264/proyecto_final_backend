@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import adminController from '../controllers/adminController.js';
 import courseController from '../controllers/courseContoller.js';
 import profileController from '../controllers/profileController.js';
 import teacherController from '../controllers/teacherController.js';
@@ -10,5 +11,7 @@ adminRouter.put('/teachers/:id', teacherController.put);
 adminRouter.get('/profiles', profileController.get);
 adminRouter.post('/courses', courseController.post);
 adminRouter.put('/courses/:id', courseController.put);
+adminRouter.get('/registered-admins', adminController.get);
+adminRouter.get('/registered-admins/:id', adminController.getById);
 
 export default adminRouter;
