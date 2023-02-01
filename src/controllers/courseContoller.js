@@ -42,7 +42,7 @@ async function post(req, res, next) {
 async function put(req, res, next) {
   try {
     const course = req.body;
-    const id = req.param.id;
+    const id = req.params.id;
     const result = await service.modifyCourse(id, course);
     res.json(result);
   } catch (error) {

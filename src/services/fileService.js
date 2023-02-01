@@ -3,9 +3,10 @@ import { Readable } from 'node:stream';
 
 function completeFilePath(object, filepathProperty) {
   const parentFolder = process.env.FILE_SERVER_URL;
-  Object.assign(object, {
-    [filepathProperty]: `${parentFolder}/${course[filepathProperty]}`,
+  const newObject = Object.assign(object, {
+    [filepathProperty]: `${parentFolder}/${object[filepathProperty]}`,
   });
+  return newObject;
 }
 
 async function uploadFTP(fileName, buffer) {
