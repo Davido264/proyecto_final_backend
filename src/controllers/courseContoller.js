@@ -1,11 +1,13 @@
 import { postSchema } from '../schemas/courseSchema.js';
 import service from '../services/coursesService.js';
+import { completeFilePath } from '../services/fileService.js';
 import validateSchema from '../services/schemaValidatorService.js';
 
-async function get(_, res, next) {
+async function get(req, res, next) {
   try {
-    const course = await service.getCourses();
-    res.json(course);
+    const coursesFromDb = await service.getCourses();
+    const courses = coursesFromDb.map(e => completeFilePath(e, 'dumbnail'));
+    res.json(courses);
   } catch (error) {
     next(error);
   }
@@ -14,7 +16,8 @@ async function get(_, res, next) {
 async function getById(req, res, next) {
   try {
     const id = req.params.id;
-    const course = await service.getCourse(id);
+    const courseFromDb = await service.getCourse(id);
+    const course = completeFilePath(courseFromDb, 'dumbnail');
     res.json(course);
   } catch (error) {
     next(error);
