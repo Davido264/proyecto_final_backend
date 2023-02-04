@@ -1,7 +1,8 @@
 import ftp from 'basic-ftp';
+import { Buffer } from 'node:buffer';
 import { Readable } from 'node:stream';
 
-function completeFilePath(object, filepathProperty) {
+function completeFilePath(object: any, filepathProperty: string): any {
   const parentFolder = process.env.FILE_SERVER_URL;
   const newObject = Object.assign(object, {
     [filepathProperty]: `${parentFolder}/${object[filepathProperty]}`,
@@ -9,7 +10,7 @@ function completeFilePath(object, filepathProperty) {
   return newObject;
 }
 
-async function uploadFTP(fileName, buffer) {
+async function uploadFTP(fileName: string, buffer: Buffer) {
   const stream = new Readable({
     read() {
       this.push(buffer);
@@ -27,7 +28,7 @@ async function uploadFTP(fileName, buffer) {
       password: process.env.FTP_PASSWORD,
     });
 
-    await client.cd(process.env.FTP_DIR);
+    await client.cd(process.env.FTP_DIR as string);
     await client.uploadFrom(stream, fileName);
   } catch (err) {
     console.log(err);

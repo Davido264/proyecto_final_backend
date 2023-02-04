@@ -1,6 +1,7 @@
+import { NextFunction, Request, Response } from 'express';
 import adminService from '../services/adminService.js';
 
-async function get(req, res, next) {
+async function get(req: Request, res: Response, next: NextFunction) {
   try {
     const admins = await adminService.getAdmins();
     res.json(admins);
@@ -9,7 +10,7 @@ async function get(req, res, next) {
   }
 }
 
-async function getById(req, res, next) {
+async function getById(req: Request, res: Response, next: NextFunction) {
   try {
     const id = req.params.id;
     const admin = await adminService.getAdmin(id);

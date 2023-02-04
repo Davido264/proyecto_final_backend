@@ -1,9 +1,15 @@
-import { ObjectId } from 'mongodb';
+import {
+  Document,
+  InsertOneResult,
+  ObjectId,
+  UpdateResult,
+  WithId,
+} from 'mongodb';
 import { createClient, getDbName } from './mongo.js';
 
 const cursesCollectionName = 'courses';
 
-async function getCourses(query = {}) {
+async function getCourses(query = {}): Promise<WithId<Document>[]> {
   const client = createClient();
   try {
     await client.connect();
@@ -17,7 +23,7 @@ async function getCourses(query = {}) {
   }
 }
 
-async function getCourse(id) {
+async function getCourse(id: string): Promise<WithId<Document> | null> {
   const client = createClient();
   try {
     await client.connect();
@@ -30,7 +36,7 @@ async function getCourse(id) {
   }
 }
 
-async function addCourse(course) {
+async function addCourse(course: any): Promise<InsertOneResult<Document>> {
   const client = createClient();
   try {
     await client.connect();
@@ -43,7 +49,7 @@ async function addCourse(course) {
   }
 }
 
-async function modifyCourse(id, course) {
+async function modifyCourse(id: string, course: any): Promise<UpdateResult> {
   const client = createClient();
   try {
     await client.connect();

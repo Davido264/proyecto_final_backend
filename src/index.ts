@@ -7,6 +7,7 @@ import adminRouter from './routes/adminRouter.js';
 import authRouter from './routes/authRouter.js';
 import courseRouter from './routes/courseRouter.js';
 import profileRouter from './routes/profileRouter.js';
+import subscriptionRouter from './routes/subscriptionRouter.js';
 import teacherRouter from './routes/teachersRouter.js';
 
 const app = express();
@@ -34,6 +35,7 @@ app.use('/admin', adminRouter);
 app.use('/profiles', profileRouter);
 app.use('/courses', courseRouter);
 app.use('/auth', authRouter);
+app.use('/subscriptions', subscriptionRouter);
 
 app.use(errorHandler);
 app.listen(port, () => console.log(`listening on ${port}`));

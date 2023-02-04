@@ -1,10 +1,11 @@
+import { NextFunction, Request, Response } from 'express';
 import authSchema from '../schemas/authSchema.js';
 import { postSchema, putSchema } from '../schemas/profileSchema.js';
-import authGenerator from '../services/authGeneratorService.js';
+import { createToken } from '../services/authGeneratorService.js';
 import profilesService from '../services/profilesService.js';
 import validateSchema from '../services/schemaValidatorService.js';
 
-async function get(req, res, next) {
+async function get(req: Request, res: Response, next: NextFunction) {
   try {
     const profiles = await profilesService.getProfiles();
 
@@ -16,7 +17,7 @@ async function get(req, res, next) {
   }
 }
 
-async function getById(req, res, next) {
+async function getById(req: Request, res: Response, next: NextFunction) {
   try {
     const id = req.params.id;
     const profile = await profilesService.getProfile(id);
@@ -29,7 +30,7 @@ async function getById(req, res, next) {
   }
 }
 
-async function post(req, res, next) {
+async function post(req: Request, res: Response, next: NextFunction) {
   try {
     const correct = validateSchema(postSchema, req, res);
     if (!correct) {
@@ -52,7 +53,7 @@ async function post(req, res, next) {
   }
 }
 
-async function put(req, res, next) {
+async function put(req: Request, res: Response, next: NextFunction) {
   try {
     const correct = validateSchema(putSchema, req, res);
     if (!correct) {
@@ -68,7 +69,7 @@ async function put(req, res, next) {
   }
 }
 
-async function deletep(req, res, next) {
+async function deletep(req: Request, res: Response, next: NextFunction) {
   try {
     const id = req.params.id;
     const result = await profilesService.deleteProfile(id);
@@ -78,9 +79,9 @@ async function deletep(req, res, next) {
   }
 }
 
-async function authenticate(req, res, next) {
+async function authenticate(req: Request, res: Response, next: NextFunction) {
   try {
-    const correct = validateSchema(authSchema, req, res, next);
+    const correct = validateSchema(authSchema, req, res);
     if (!correct) {
       return;
     }
@@ -102,7 +103,11 @@ async function authenticate(req, res, next) {
       return;
     }
 
-    const token = authGenerator(profile);
+    const token = createToken({
+      email: profile.email,
+      id: profile._id.toString(),
+    });
+
     res.json({ token: token });
   } catch (error) {
     next(error);

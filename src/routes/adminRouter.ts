@@ -10,6 +10,7 @@ adminRouter.post('/teachers', teacherController.post);
 adminRouter.put('/teachers/:id', teacherController.put);
 adminRouter.get('/profiles', profileController.get);
 adminRouter.post('/courses', courseController.post);
+adminRouter.get('/courses/:id/subscribers', courseController.getSubscribers);
 adminRouter.put('/courses/:id', courseController.put);
 adminRouter.get('/registered-admins', adminController.get);
 adminRouter.get('/registered-admins/:id', adminController.getById);

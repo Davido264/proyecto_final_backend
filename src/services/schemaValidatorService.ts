@@ -1,6 +1,7 @@
+import { Request, Response } from 'express';
 import { validate } from 'jsonschema';
 
-function validateSchema(schema, req, res) {
+function validateSchema(schema: any, req: Request, res: Response): boolean {
   if (req.get('Content-Type') != 'application/json') {
     res.status(400).json({ message: 'bad application type' });
     return false;

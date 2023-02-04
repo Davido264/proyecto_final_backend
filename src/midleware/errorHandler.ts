@@ -1,4 +1,6 @@
-export default (err, req, res, next) => {
+import { NextFunction, Request, Response } from 'express';
+
+export default (err: any, req: Request, res: Response, next: NextFunction) => {
   const statusCode = err.statusCode || 500;
   console.error(err.message, err.stack);
   res

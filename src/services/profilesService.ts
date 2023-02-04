@@ -1,9 +1,16 @@
-import { ObjectId } from 'mongodb';
+import {
+  DeleteResult,
+  Document,
+  InsertOneResult,
+  ObjectId,
+  UpdateResult,
+  WithId,
+} from 'mongodb';
 import { createClient, getDbName } from './mongo.js';
 
 const profileCollectionName = 'profiles';
 
-async function getProfiles(query = {}) {
+async function getProfiles(query = {}): Promise<WithId<Document>[]> {
   const client = createClient();
   console.log(getDbName());
   try {
@@ -17,7 +24,7 @@ async function getProfiles(query = {}) {
   }
 }
 
-async function getProfile(id) {
+async function getProfile(id: string): Promise<WithId<Document> | null> {
   const client = createClient();
   try {
     return await client
@@ -29,7 +36,7 @@ async function getProfile(id) {
   }
 }
 
-async function addProfile(profile) {
+async function addProfile(profile: any): Promise<InsertOneResult<Document>> {
   const client = createClient();
   try {
     return await client
@@ -41,7 +48,7 @@ async function addProfile(profile) {
   }
 }
 
-async function updateProfile(id, profile) {
+async function updateProfile(id: string, profile: any): Promise<UpdateResult> {
   const client = createClient();
   try {
     return await client
@@ -53,7 +60,7 @@ async function updateProfile(id, profile) {
   }
 }
 
-async function deleteProfile(id) {
+async function deleteProfile(id: string): Promise<DeleteResult> {
   const client = createClient();
   try {
     return await client

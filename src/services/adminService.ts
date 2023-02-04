@@ -1,9 +1,9 @@
-import { ObjectId } from 'mongodb';
+import { Document, ObjectId, WithId } from 'mongodb';
 import { createClient, getDbName } from './mongo.js';
 
 const adminCollectionName = 'admins';
 
-async function getAdmins(query = {}) {
+async function getAdmins(query = {}): Promise<WithId<Document>[]> {
   const client = createClient();
   try {
     return client
@@ -16,14 +16,13 @@ async function getAdmins(query = {}) {
   }
 }
 
-async function getAdmin(id) {
+async function getAdmin(id: string): Promise<WithId<Document> | null> {
   const client = createClient();
   try {
-    return client
+    return await client
       .db(getDbName())
       .collection(adminCollectionName)
-      .findOne({ _id: new ObjectId(id) })
-      .toArray();
+      .findOne({ _id: new ObjectId(id) });
   } finally {
     client.close();
   }
