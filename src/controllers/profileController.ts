@@ -108,7 +108,7 @@ async function authenticate(req: Request, res: Response, next: NextFunction) {
       id: profile._id.toString(),
     });
 
-    res.json({ token: token });
+    res.json({ token: token, userId: profile._id.toString() });
   } catch (error) {
     next(error);
   }

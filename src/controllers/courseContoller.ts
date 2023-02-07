@@ -27,6 +27,19 @@ async function getById(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+async function getQuery(req: Request, res: Response, next: NextFunction) {
+  try {
+    const query = req.params.query;
+    const coursesFromDb = await coursesService.getCourses({
+      title: new RegExp(`${query}.*`, 'i'),
+    });
+    const courses = coursesFromDb.map(e => completeFilePath(e, 'dumbnail'));
+    res.json(courses);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function post(req: Request, res: Response, next: NextFunction) {
   try {
     const correct = validateSchema(postSchema, req, res);
@@ -61,9 +74,7 @@ async function getSubscribers(req: Request, res: Response, next: NextFunction) {
     });
 
     const subscribers = subscriptions.map(async e => {
-      return await profilesService.getProfiles({
-        subscriptions: { $elemMatch: e._id.toString() },
-      });
+      return await profilesService.getProfile(e.userId);
     });
     res.json(subscribers);
   } catch (error) {
@@ -77,4 +88,5 @@ export default {
   post,
   put,
   getSubscribers,
+  getQuery,
 };

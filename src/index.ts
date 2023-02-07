@@ -20,11 +20,11 @@ app.use(bodyParser.json());
 
 // logging access to every route
 app.use((req, _, next) => {
-  console.log(`Attempt to call ${req.method} on ${req.path}`);
+  console.log(`Attempt to call ${req.method} on url: ${req.path}`);
   next();
 });
 
-app.get('/', (req, res, next) => {
+app.get('/', (_, res, next) => {
   res.json('ok');
   next();
 });

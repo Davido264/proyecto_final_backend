@@ -6,14 +6,14 @@ import {
   UpdateResult,
   WithId,
 } from 'mongodb';
-import { createClient, getDbName } from './mongo';
+import { createClient, getDbName } from './mongo.js';
 
 const subscriptionCollectionName = 'subscriptions';
 
 async function getSubscriptions(query = {}): Promise<WithId<Document>[]> {
   const client = createClient();
   try {
-    return client
+    return await client
       .db(getDbName())
       .collection(subscriptionCollectionName)
       .find(query)
@@ -26,7 +26,7 @@ async function getSubscriptions(query = {}): Promise<WithId<Document>[]> {
 async function getSubscription(id: string): Promise<WithId<Document> | null> {
   const client = createClient();
   try {
-    return client
+    return await client
       .db(getDbName())
       .collection(subscriptionCollectionName)
       .findOne({ _id: new ObjectId(id) });
@@ -40,7 +40,7 @@ async function createSubscription(
 ): Promise<InsertOneResult<Document>> {
   const client = createClient();
   try {
-    return client
+    return await client
       .db(getDbName())
       .collection(subscriptionCollectionName)
       .insertOne(subscription);
@@ -52,7 +52,7 @@ async function createSubscription(
 async function deleteSubscription(id: string): Promise<DeleteResult> {
   const client = createClient();
   try {
-    return client
+    return await client
       .db(getDbName())
       .collection(subscriptionCollectionName)
       .deleteOne({ _id: new ObjectId(id) });
@@ -67,7 +67,7 @@ async function modifySubscription(
 ): Promise<UpdateResult> {
   const client = createClient();
   try {
-    return client
+    return await client
       .db(getDbName())
       .collection(subscriptionCollectionName)
       .updateOne({ _id: new ObjectId(id) }, { $set: subscription });
